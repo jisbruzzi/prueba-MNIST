@@ -1,5 +1,4 @@
 $=jQuery
-
 function generarPrediccion(casilleros){
 	let formaVector=[]
 	for(let fila of casilleros){
@@ -7,6 +6,40 @@ function generarPrediccion(casilleros){
 	}
 	
 	console.log(formaVector.join(","))
+	
+	
+	let record={};
+	
+	for(let i=0;i<formaVector.length;i++){
+		let formateado="";
+		let valor=i+2;
+		if(valor<=9){
+			formateado="00"+valor;
+		}else if(valor<=99){
+			formateado="0"+valor;
+		}else if(valor<=999){
+			formateado=""+valor;
+		}
+		record["Var"+formateado]=""+formaVector[i]
+		
+	}
+	
+	AWS.config.region="us-east-1";
+	AWS.config.credentials=new AWS.Credentials(accesKeyId,secretAccessKey);
+	
+	let params={
+		"MLModelId": "ml-zJUpUWsNDwW",
+		"Record":record,
+		"PredictEndpoint": "https://realtime.machinelearning.us-east-1.amazonaws.com"
+	}
+	
+	let machinelearning=new AWS.MachineLearning();
+	
+	machinelearning.predict(params,function(err,data){
+		console.log(err,data);
+		document.getElementById("resultado").innerHTML=""+data.Prediction.predictedLabel;
+	})
+	
 	
 }
 
@@ -49,13 +82,12 @@ function dibujarEstado(casilleros,columnas,filas,canvas){
 }
 
 
-function mouseEn(x,y,casilleros,anchoColumna,altoFila,cuanto){
-	if(cuanto==null) cuanto=255;
+function mouseEn(x,y,casilleros,anchoColumna,altoFila){
 	
 	let filaPrendida=Math.floor(y/ altoFila);
 	let columnaPrendida=Math.floor(x / anchoColumna);
 	
-	casilleros[filaPrendida][columnaPrendida]=Math.min(255,casilleros[filaPrendida][columnaPrendida]+cuanto);
+	casilleros[filaPrendida][columnaPrendida]=255
 }
 
 
@@ -131,7 +163,12 @@ $(document).ready((function(){
 				for(let j=0;j<pasosGiro;j++){
 					let xx=x+Math.cos(j/pasosGiro*2*Math.PI)*8
 					let yy=y+Math.sin(j/pasosGiro*2*Math.PI)*8
-					mouseEn(xx,yy,casilleros,width/columnas,height/filas,30)
+					mouseEn(xx,yy,casilleros,width/columnas,height/filas)
+				}
+				for(let j=0;j<pasosGiro;j++){
+					let xx=x+Math.cos(j/pasosGiro*2*Math.PI)*15
+					let yy=y+Math.sin(j/pasosGiro*2*Math.PI)*15
+					mouseEn(xx,yy,casilleros,width/columnas,height/filas)
 				}
 			}
 			
