@@ -5,7 +5,7 @@ content {
 	justify-content:space-evenly;
 	align-items:center;
 }
-
+* { touch-action: none; }
 #resultado {
 	font-size:350px;
 	user-select:none;
