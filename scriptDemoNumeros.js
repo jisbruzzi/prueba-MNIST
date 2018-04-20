@@ -1,3 +1,4 @@
+$=jQuery
 function dibujarEstado(casilleros,columnas,filas,canvas){
 	let c=canvas.getContext("2d");
 	
