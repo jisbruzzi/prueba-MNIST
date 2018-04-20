@@ -1,0 +1,2 @@
+accesKeyId="AKIAJMHDYV6FGKGLFLNQ";
+secretAccessKey="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";
