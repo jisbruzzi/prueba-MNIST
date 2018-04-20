@@ -1,3 +1,13 @@
 content {
     border: 5px solid red;
+	display:flex;
+	flex-direction:row;
+	justify-content:space-evenly;
+	align-items:center;
+}
+
+#resultado {
+	font-size:350px;
+	user-select:none;
+	
 }

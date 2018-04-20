@@ -1,4 +1,16 @@
 $=jQuery
+
+function generarPrediccion(casilleros){
+	let formaVector=[]
+	for(let fila of casilleros){
+		formaVector=formaVector.concat(fila)
+	}
+	
+	console.log(formaVector.join(","))
+	
+}
+
+
 function dibujarEstado(casilleros,columnas,filas,canvas){
 	let c=canvas.getContext("2d");
 	
@@ -42,6 +54,7 @@ function mouseEn(x,y,casilleros,anchoColumna,altoFila,cuanto){
 	
 	let filaPrendida=Math.floor(y/ altoFila);
 	let columnaPrendida=Math.floor(x / anchoColumna);
+	
 	casilleros[filaPrendida][columnaPrendida]=Math.min(255,casilleros[filaPrendida][columnaPrendida]+cuanto);
 }
 
@@ -63,7 +76,6 @@ $(document).ready((function(){
 		casilleros.push(columna)
 	}
 	
-	console.log(casilleros)
 	
 	dibujarEstado(casilleros,columnas,filas,canvas)
 	
@@ -87,12 +99,16 @@ $(document).ready((function(){
 		dibujarEstado(casilleros,columnas,filas,canvas)
 		prevX=null
 		prevY=null
+		
+		generarPrediccion(casilleros)
 	})
 	
 	$(canvas).on("mouseout",function(e){
 		mousedown=false;
 		prevX=null
 		prevY=null
+		
+		generarPrediccion(casilleros)
 	})
 	
 	
@@ -100,7 +116,6 @@ $(document).ready((function(){
 	
 	$(canvas).on("mousemove",function(e){
 		if(mousedown){
-			console.log(e)
 			
 			let dx=e.offsetX-prevX;
 			let dy=e.offsetY-prevY;
@@ -114,8 +129,8 @@ $(document).ready((function(){
 				
 				let pasosGiro=8
 				for(let j=0;j<pasosGiro;j++){
-					let xx=x+Math.cos(j/pasosGiro*2*Math.PI)*5
-					let yy=y+Math.sin(j/pasosGiro*2*Math.PI)*5
+					let xx=x+Math.cos(j/pasosGiro*2*Math.PI)*8
+					let yy=y+Math.sin(j/pasosGiro*2*Math.PI)*8
 					mouseEn(xx,yy,casilleros,width/columnas,height/filas,30)
 				}
 			}
