@@ -116,7 +116,7 @@ $(document).ready((function(){
 	let prevX=null;
 	let prevY=null;
 	
-	$(canvas).on("mousedown",function(e){
+	$(canvas).on("pointerdown",function(e){
 		mouseEn(e.offsetX,e.offsetY,casilleros,width/columnas,height/filas)
 		dibujarEstado(casilleros,columnas,filas,canvas)
 		mousedown=true;
@@ -125,7 +125,7 @@ $(document).ready((function(){
 	})
 	
 	
-	$(canvas).on("mouseup",function(e){
+	$(canvas).on("pointerup",function(e){
 		mousedown=false;
 		mouseEn(e.offsetX,e.offsetY,casilleros,width/columnas,height/filas)
 		dibujarEstado(casilleros,columnas,filas,canvas)
@@ -135,7 +135,7 @@ $(document).ready((function(){
 		generarPrediccion(casilleros)
 	})
 	
-	$(canvas).on("mouseout",function(e){
+	$(canvas).on("pointerout",function(e){
 		mousedown=false;
 		prevX=null
 		prevY=null
@@ -146,7 +146,7 @@ $(document).ready((function(){
 	
 	
 	
-	$(canvas).on("mousemove",function(e){
+	$(canvas).on("pointermove",function(e){
 		if(mousedown){
 			
 			let dx=e.offsetX-prevX;
